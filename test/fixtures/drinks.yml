@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  classification: one
+  name: MyString
+  name_kana: MyString
+  name_en: MyString
+  explanation: MyText
+  explanation_en: MyText
+  affiliate_word: MyString
+
+two:
+  classification: two
+  name: MyString
+  name_kana: MyString
+  name_en: MyString
+  explanation: MyText
+  explanation_en: MyText
+  affiliate_word: MyString

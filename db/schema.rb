@@ -1,0 +1,119 @@
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# you'll amass, the slower it'll run and the greater likelihood for issues).
+#
+# It's strongly recommended that you check this file into your version control system.
+
+ActiveRecord::Schema.define(version: 2018_04_27_122741) do
+
+  create_table "active_admin_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "namespace"
+    t.text "body"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.string "author_type"
+    t.bigint "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+  end
+
+  create_table "classifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "name_en", null: false
+    t.text "explanation", null: false
+    t.text "explanation_en", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "drinks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "classification_id", null: false
+    t.string "name", null: false
+    t.string "name_kana", null: false
+    t.string "name_en", null: false
+    t.text "explanation", null: false
+    t.text "explanation_en", null: false
+    t.string "affiliate_word", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["classification_id"], name: "index_drinks_on_classification_id"
+  end
+
+  create_table "impressions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "drink_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "place_id", null: false
+    t.string "title", null: false
+    t.string "title_en", null: false
+    t.text "impression", null: false
+    t.text "impression_en", null: false
+    t.boolean "delete_flg", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["drink_id"], name: "index_impressions_on_drink_id"
+    t.index ["place_id"], name: "index_impressions_on_place_id"
+    t.index ["user_id", "place_id", "drink_id"], name: "index_impressions_on_user_id_and_place_id_and_drink_id", unique: true
+    t.index ["user_id"], name: "index_impressions_on_user_id"
+  end
+
+  create_table "pictures", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "impression_id", null: false
+    t.string "title", null: false
+    t.string "title_en", null: false
+    t.text "memo"
+    t.text "memo_en"
+    t.boolean "delete_flg", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "image", null: false
+    t.index ["impression_id"], name: "index_pictures_on_impression_id"
+  end
+
+  create_table "places", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "name_en", null: false
+    t.text "explanation", null: false
+    t.text "explanation_en", null: false
+    t.string "open_time", null: false
+    t.string "open_time_en", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "nickname", null: false
+    t.integer "gender", null: false
+    t.text "memo", null: false
+    t.boolean "admin_flg", null: false
+    t.boolean "delete_flg", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  add_foreign_key "drinks", "classifications"
+  add_foreign_key "impressions", "drinks"
+  add_foreign_key "impressions", "places"
+  add_foreign_key "impressions", "users"
+  add_foreign_key "pictures", "impressions"
+end

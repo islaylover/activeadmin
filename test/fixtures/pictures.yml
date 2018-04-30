@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  impression: one
+  title: MyString
+  title_en: MyString
+  memo: MyString
+  memo_en: MyText
+  delete_flg: false
+
+two:
+  impression: two
+  title: MyString
+  title_en: MyString
+  memo: MyString
+  memo_en: MyText
+  delete_flg: false
